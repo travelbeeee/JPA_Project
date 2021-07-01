@@ -28,7 +28,6 @@ public class JpaMain {
 
             em.persist(memberA);
 
-
             tx.commit();
         }catch(Exception e){
             System.out.println(e.getMessage());
