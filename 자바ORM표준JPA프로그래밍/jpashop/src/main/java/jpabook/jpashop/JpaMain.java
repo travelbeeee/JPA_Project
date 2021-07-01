@@ -1,5 +1,8 @@
 package jpabook.jpashop;
 
+import jpabook.jpashop.domain.Member;
+import jpabook.jpashop.domain.Team;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -14,6 +17,16 @@ public class JpaMain {
         tx.begin();
 
         try{
+            Team teamA = new Team("TeamA");
+            em.persist(teamA);
+
+//            Member memberA = new Member("memberA", teamA.getId());
+//            em.persist(memberA);
+
+            Member memberA = new Member("memberA");
+            memberA.setTeam(teamA);
+
+            em.persist(memberA);
 
 
             tx.commit();
