@@ -1,12 +1,15 @@
 package jpabook.jpashop;
 
-import jpabook.jpashop.domain.Member;
-import jpabook.jpashop.domain.Team;
+import jpabook.jpashop.domain.jpashop.Album;
+import jpabook.jpashop.domain.jpashop.Member;
+import jpabook.jpashop.domain.jpashop.Movie;
+import jpabook.jpashop.domain.jpashop.Team;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.lang.reflect.Modifier;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -15,27 +18,29 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
 
         tx.begin();
+        try {
+            Album album = new Album();
+            album.setName("name");
+            album.setPrice(10000);
+            album.setAuthor("Author");
 
-        try{
-            Team teamA = new Team("TeamA");
-            em.persist(teamA);
+            em.persist(album);
 
-//            Member memberA = new Member("memberA", teamA.getId());
-//            em.persist(memberA);
+            Movie movie = new Movie();
+            movie.setName("name2");
+            movie.setPrice(20000);
+            movie.setActor("actor");
+            movie.setDirector("director");
 
-            Member memberA = new Member("memberA");
-            memberA.setTeam(teamA);
-
-            em.persist(memberA);
-
+            em.persist(movie);
             tx.commit();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-        }finally {
-            if(em.isOpen()){
+        } finally {
+            if (em.isOpen()) {
                 em.close();
             }
-            if(emf.isOpen()){
+            if (emf.isOpen()) {
                 emf.close();
             }
         }
